@@ -1,6 +1,6 @@
 # Two-View Synthetic Curve Dataset
 
-A **two-view synthetic curve dataset** for evaluating curve reconstruction and triangulation algorithms. This repository provides **384** pre-generated stereo cases together with a Jupyter notebook to reproduce or extend the dataset.
+A **two-view synthetic curve dataset** for evaluating curve reconstruction and triangulation algorithms. This repository provides **384** pre-generated stereo cases, **7 scaled real-world image pairs** from ETH3D, and a Jupyter notebook to reproduce or extend the synthetic dataset.
 
 ---
 
@@ -21,7 +21,8 @@ It is intended for quantitative evaluation and comparison of curve reconstructio
 |------|-------------|
 | `pointclouds/` | 384 ground-truth point cloud files |
 | `images/` | 384 stereo pseudo-image pairs (each with `1.png` and `2.png`) |
-| `generate_dataset.ipynb` | Jupyter notebook to regenerate or customize the dataset |
+| `ETH3D_image_pairs/` | 7 real stereo image pairs from ETH3D (scaled to 0.2×) |
+| `generate_dataset.ipynb` | Jupyter notebook to regenerate or customize the synthetic dataset |
 
 ---
 
@@ -33,10 +34,13 @@ two-view-synthetic-curve-dataset/
 ├── pointclouds/
 │   ├── 01_0_0_0.ply
 │   └── ...
-└── images/
-    ├── 01_0_0_0/
-    │   ├── 1.png    # left camera
-    │   └── 2.png    # right camera
+├── images/
+│   ├── 01_0_0_0/
+│   │   ├── 1.png    # left camera
+│   │   └── 2.png    # right camera
+│   └── ...
+└── ETH3D_image_pairs/
+    ├── courtyard/
     └── ...
 ```
 
@@ -89,12 +93,58 @@ The left and right cameras are placed symmetrically about the X axis, with optic
 
 ---
 
+## ETH3D Real Image Pairs (`ETH3D_image_pairs/`)
+
+In addition to the synthetic data, this repository includes **7 real stereo image pairs** selected from **[ETH3D](https://www.eth3d.net/)** for experiments on real-world imagery.
+
+- Images are **scaled to 0.2×** (20% of the original width and height) to reduce file size and simplify download and experimentation.
+- Each pair consists of two JPG files; subdirectory names correspond to ETH3D scene names.
+
+### Directory Layout
+
+```
+ETH3D_image_pairs/
+├── courtyard/
+│   ├── ETH3D__DSC_0306.JPG
+│   └── ETH3D__DSC_0307.JPG
+├── facade/
+│   ├── ETH3D__DSC_0361.JPG
+│   └── ETH3D__DSC_0362.JPG
+├── kicker/
+│   ├── ETH3D__DSC_6512.JPG
+│   └── ETH3D__DSC_6513.JPG
+├── office/
+│   ├── ETH3D__DSC_0219.JPG
+│   └── ETH3D__DSC_0220.JPG
+├── relief/
+│   ├── ETH3D__DSC_0454.JPG
+│   └── ETH3D__DSC_0456.JPG
+├── relief2/
+│   ├── ETH3D__DSC_0484.JPG
+│   └── ETH3D__DSC_0485.JPG
+└── terrace/
+    ├── ETH3D__DSC_0267.JPG
+    └── ETH3D__DSC_0268.JPG
+```
+
+### Usage Notes
+
+- Images in this repository are downscaled. **If you use official ETH3D calibration, scale intrinsics accordingly** (e.g., multiply focal length and principal point by 0.2), or re-estimate calibration on the resized images.
+- Use and redistribution of ETH3D data must comply with the [official ETH3D license](https://www.eth3d.net/). Please cite the ETH3D paper when using `ETH3D_image_pairs/` in publications.
+
+### ETH3D Citation
+
+> T. Schöps, et al. *A Multi-View Stereo Benchmark with High-Resolution Images and Multi-Camera Videos.* CVPR 2017.
+
+---
+
 ## Usage
 
 ### Use the provided dataset directly
 
 - Ground-truth point cloud: `pointclouds/{case_name}.ply`
 - Left / right views: `images/{case_name}/1.png`, `2.png`
+- ETH3D real pairs: `ETH3D_image_pairs/{scene_name}/` (two `.JPG` files per scene)
 
 ### Regenerate or extend the dataset
 
